@@ -11,7 +11,6 @@
     "location": "[resourceGroup().location]",
     "apiVersion": "2022-11-01",
     "properties": {
-        "vmId": "325fca2c-9351-4054-a217-3d2dd14f62f5",
         "hardwareProfile": {
             "vmSize": "Standard_D2s_v3"
         },

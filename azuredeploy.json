@@ -6,7 +6,9 @@
     "variables": {},
     "resources": [
         {
-    "name": "vmdemo",
+    "type": "Microsoft.VirtualMachineImages/imageTemplates"
+    "apiVersion": "2022-02-14"        
+    "name": "harpreet",
     "id": "/subscriptions/37291556-4f37-4704-98fb-54720b99d7de/resourceGroups/vm/providers/Microsoft.Compute/virtualMachines/vmdemo",
     "type": "Microsoft.Compute/virtualMachines",
     "location": "eastasia",

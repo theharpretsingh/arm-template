@@ -5,13 +5,11 @@
     "functions": [],
     "variables": {},
     "resources": [
-        {
-    "type": "Microsoft.VirtualMachineImages/imageTemplates"
-    "apiVersion": "2022-02-14"        
+        {       
     "name": "harpreet",
-    "id": "/subscriptions/37291556-4f37-4704-98fb-54720b99d7de/resourceGroups/vm/providers/Microsoft.Compute/virtualMachines/vmdemo",
     "type": "Microsoft.Compute/virtualMachines",
-    "location": "eastasia",
+    "location": "[resourceGroup().location]",
+    "apiVersion": "2022-11-01",
     "properties": {
         "vmId": "325fca2c-9351-4054-a217-3d2dd14f62f5",
         "hardwareProfile": {
@@ -31,8 +29,7 @@
                 "createOption": "FromImage",
                 "caching": "ReadWrite",
                 "managedDisk": {
-                    "storageAccountType": "Premium_LRS",
-                    "id": "/subscriptions/37291556-4f37-4704-98fb-54720b99d7de/resourceGroups/vm/providers/Microsoft.Compute/disks/vmdemo_OsDisk_1_bda94f3b24bb4374816a2d2b17318654"
+                    "storageAccountType": "Premium_LRS"
                 },
                 "deleteOption": "Delete",
                 "diskSizeGB": 30
@@ -57,7 +54,6 @@
         "networkProfile": {
             "networkInterfaces": [
                 {
-                    "id": "/subscriptions/37291556-4f37-4704-98fb-54720b99d7de/resourceGroups/vm/providers/Microsoft.Network/networkInterfaces/vmdemo432_z1",
                     "properties": {
                         "deleteOption": "Detach"
                     }

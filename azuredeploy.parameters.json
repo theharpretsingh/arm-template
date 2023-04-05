@@ -2,14 +2,20 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "vmName": {
+      "value": "myVM"
+    },
+    "vmSize": {
+      "value": "Standard_DS2_v2"
+    },
     "adminUsername": {
-      "value": "azureuser"
+      "value": "adminuser"
     },
-    "adminPasswordOrKey": {
-      "value": "Matrix!@#123"
+    "adminPassword": {
+      "value": "MyPa$$w0rd"
     },
-    "dnsLabelPrefix": {
-      "value": "GEN-UNIQUE"
+    "location": {
+      "value": "East US"
     }
   }
 }

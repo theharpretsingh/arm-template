@@ -1,76 +1,92 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "functions": [],
-    "variables": {},
-    "resources": [
-        {       
-    "name": "harpreet",
-    "type": "Microsoft.Compute/virtualMachines",
-    "location": "[resourceGroup().location]",
-    "apiVersion": "2022-11-01",
-    "properties": {
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the virtual machine."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "description": "Size of the virtual machine."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the virtual machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the virtual machine."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Location/region where the virtual machine should be created."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-03-01",
+      "name": "[parameters('vmName')]",
+      "location": "[parameters('location')]",
+      "properties": {
         "hardwareProfile": {
-            "vmSize": "Standard_D2s_v3"
-        },
-        "storageProfile": {
-            "imageReference": {
-                "publisher": "canonical",
-                "offer": "0001-com-ubuntu-server-focal",
-                "sku": "20_04-lts-gen2",
-                "version": "latest",
-                "exactVersion": "20.04.202303280"
-            },
-            "osDisk": {
-                "osType": "Linux",
-                "name": "vmdemo_OsDisk_1_bda94f3b24bb4374816a2d2b17318654",
-                "createOption": "FromImage",
-                "caching": "ReadWrite",
-                "managedDisk": {
-                    "storageAccountType": "Premium_LRS"
-                },
-                "deleteOption": "Delete",
-                "diskSizeGB": 30
-            },
-            "dataDisks": []
+          "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-            "computerName": "vmdemo",
-            "adminUsername": "azureuser",
-            "linuxConfiguration": {
-                "disablePasswordAuthentication": false,
-                "provisionVMAgent": true,
-                "patchSettings": {
-                    "patchMode": "ImageDefault",
-                    "assessmentMode": "ImageDefault"
-                }
-            },
-            "secrets": [],
-            "allowExtensionOperations": true,
-            "requireGuestProvisionSignal": true
+          "computerName": "[parameters('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2019-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
         },
         "networkProfile": {
-            "networkInterfaces": [
-                {
-                    "properties": {
-                        "deleteOption": "Detach"
-                    }
-                }
-            ]
-        },
-        "diagnosticsProfile": {
-            "bootDiagnostics": {
-                "enabled": true
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmName'), '-nic'))]"
             }
-        },
-        "provisioningState": "Succeeded"
-    },
-    "zones": [
-        "1"
-    ]
-}
-
-    ],
-    "outputs": {}
+          ]
+        }
+      },
+      "resources": [
+        {
+          "type": "Microsoft.Network/networkInterfaces",
+          "apiVersion": "2021-03-01",
+          "name": "[concat(parameters('vmName'), '-nic')]",
+          "location": "[parameters('location')]",
+          "properties": {
+            "ipConfigurations": [
+              {
+                "name": "ipconfig1",
+                "properties": {
+                  "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'yourVnetName', 'yourSubnetName')]"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }

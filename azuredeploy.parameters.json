@@ -3,13 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "adminUsername": {
-      "value": "azureuser"
+      "value": 'azureuser'
     },
     "adminPasswordOrKey": {
-      "value": "Matrix!@#123"
+      "value": 'Matrix!@#123'
     },
     "dnsLabelPrefix": {
-      "value": "GEN-UNIQUE"
+      "value": 'GEN-UNIQUE'
     }
   }
 }
